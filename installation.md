@@ -67,7 +67,7 @@ Import the plugin's `webpack.config.js` file in your project's `webpack.config.j
 ```javascript
 // webpack.config.js
 
-const [ zijlstratechOnePageCheckoutShop, zijlstratechOnePageCheckoutAdmin ] = require('./vendor/zijlstratech/onepagecheckout-plugin/webpack.config.js');
+const [ zijlstratechOnePageCheckoutShop, zijlstratechOnePageCheckoutAdmin ] = require('./vendor/zijlstratech/sylius-one-page-checkout-plugin/webpack.config.js');
 
 // ...
 module.exports = [
