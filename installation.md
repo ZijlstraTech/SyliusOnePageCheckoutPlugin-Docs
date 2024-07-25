@@ -62,12 +62,12 @@ Zijlstratech_sylius_onepagecheckout_shop:
 
 ## Step 6: Import Plugin's Webpack Configuration
 
-Import the plugin's `webpack.config.js` file in your project's `webpack.config.js`:
+If you are using Webpack, import the plugin's `webpack.config.js` file in your project's `webpack.config.js`:
 
 ```javascript
 // webpack.config.js
 
-const [ zijlstratechOnePageCheckoutShop, zijlstratechOnePageCheckoutAdmin ] = require('./vendor/zijlstratech/sylius-one-page-checkout-plugin/webpack.config.js');
+const [ zijlstratechOnePageCheckoutShop, zijlstratechOnePageCheckoutAdmin ] = require('./vendor/zijlstratech/onepagecheckout-plugin/webpack.config.js');
 
 // ...
 module.exports = [
@@ -77,32 +77,81 @@ module.exports = [
 ];
 ```
 
-Or without webpack:
+## Step 7: Add New Packages
 
-1. Install plugin assets using:
+Add new packages in `./config/packages/assets.yaml`:
 
-```bash
-$ bin/console assets:install
+```yaml
+# config/packages/assets.yaml
+
+framework:
+    assets:
+        packages:
+            # ...
+            shop:
+                json_manifest_path: '%kernel.project_dir%/public/build/shop/manifest.json'
+            onepagecheckout_shop:
+                json_manifest_path: '%kernel.project_dir%/public/build/zijlstratech/onepagecheckout/shop/manifest.json'
+            onepagecheckout_admin:
+                json_manifest_path: '%kernel.project_dir%/public/build/zijlstratech/onepagecheckout/admin/manifest.json'
 ```
 
-2. Add twig inclusions in your templates:
+## Step 8: Add New Build Paths
+
+Add new build paths in `./config/packages/webpack_encore.yml`:
+
+```yaml
+# config/packages/webpack_encore.yml
+
+webpack_encore:
+    builds:
+        # ...
+        onepagecheckout_shop: '%kernel.project_dir%/public/build/zijlstratech/onepagecheckout/shop'
+        onepagecheckout_admin: '%kernel.project_dir%/public/build/zijlstratech/onepagecheckout/admin'
+```
+
+## Step 9: Add Encore Functions to Your Templates
+
+Add encore functions to your templates:
+
 ```twig
-
 {# @SyliusShopBundle/_scripts.html.twig #}
-{% include '@SyliusUi/_javascripts.html.twig' with {
-    'path': 'bundles/zijlstratechsyliusonepagecheckoutplugin/zijlstratech-onepagecheckout-shop.js'
-} %}
+{{ encore_entry_script_tags('zijlstratech-onepagecheckout-shop', null, 'onepagecheckout_shop') }}
+
+{# @SyliusShopBundle/_styles.html.twig #}
+{{ encore_entry_link_tags('zijlstratech-onepagecheckout-shop', null, 'onepagecheckout_shop') }}
+
+{# @SyliusAdminBundle/_scripts.html.twig #}
+{{ encore_entry_script_tags('zijlstratech-onepagecheckout-admin', null, 'onepagecheckout_admin') }}
+
+{# @SyliusAdminBundle/_styles.html.twig #}
+{{ encore_entry_link_tags('zijlstratech-onepagecheckout-admin', null, 'onepagecheckout_admin') }}
 ```
 
+## Step 10: Install and Build Assets
 
-## Step 7: Install and Build Assets
-
-Finally, run the following commands to install and build the assets:
+If you are using Webpack, run the following commands to install and build the assets:
 
 ```bash
 yarn install
 yarn build
 ```
 
-Your Sylius One Page Checkout Plugin should now be installed and configured correctly!
+## Or Without Webpack:
 
+If you are not using Webpack, install plugin assets using:
+
+```bash
+bin/console assets:install
+```
+
+Add Twig inclusions in your templates:
+
+```twig
+{# @SyliusShopBundle/_scripts.html.twig #}
+{% include '@SyliusUi/_javascripts.html.twig' with {
+    'path': 'bundles/zijlstratechsyliusonepagecheckoutplugin/zijlstratech-onepagecheckout-shop.js'
+} %}
+```
+
+Your Sylius One Page Checkout Plugin should now be installed and configured correctly!
