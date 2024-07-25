@@ -77,6 +77,24 @@ module.exports = [
 ];
 ```
 
+Or without webpack:
+
+1. Install plugin assets using:
+
+```bash
+$ bin/console assets:install
+```
+
+2. Add twig inclusions in your templates:
+```twig
+
+{# @SyliusShopBundle/_scripts.html.twig #}
+{% include '@SyliusUi/_javascripts.html.twig' with {
+    'path': 'bundles/zijlstratechsyliusonepagecheckoutplugin/zijlstratech-onepagecheckout-shop.js'
+} %}
+```
+
+
 ## Step 7: Install and Build Assets
 
 Finally, run the following commands to install and build the assets:
