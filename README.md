@@ -11,6 +11,6 @@ Welcome to the documentation repository for the ZijlstraTech Sylius One Page Che
 ## Getting Started
 
 - [Installation Instructions](installation.md)
-- [Demo](https://onepagecheckout.zijlstra.tech/)
+- [Demo](http://onepagecheckout.zijlstra.tech/)
   
 For additional support, visit [our support page](https://zijlstra.tech/support).
